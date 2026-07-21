@@ -1,0 +1,25 @@
+---
+const steps = [
+  { title: 'Browser', sub: 'dev-ui' },
+  { title: 'ADK Web Server', sub: 'Uvicorn' },
+  { title: 'ReAct Agent', sub: 'Gemini · Vertex AI' },
+  { title: 'Tools', sub: 'get_weather · get_current_time' },
+];
+---
+<div class="not-prose my-10 rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 sm:p-8">
+  <p class="text-center text-xs tracking-widest text-muted uppercase mb-6">Request Flow</p>
+  <div class="flex flex-wrap items-center justify-center gap-3">
+    {steps.map((step, i) => (
+      <>
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-center">
+          <p class="text-sm text-white">{step.title}</p>
+          <p class="text-[11px] text-muted">{step.sub}</p>
+        </div>
+        {i < steps.length - 1 && <span class="text-accent">→</span>}
+      </>
+    ))}
+  </div>
+  <p class="mt-4 text-center text-[11px] text-muted">
+    Tools loop back into the agent before the final response streams to the browser.
+  </p>
+</div>

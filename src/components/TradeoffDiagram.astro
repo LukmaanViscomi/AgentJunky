@@ -1,0 +1,36 @@
+---
+const panels = [
+  { src: '/hyperscaller_panel.png', alt: 'Path 1: Hyperscaler — GCP Agent Platform, AWS Bedrock + AgentCore, Microsoft Foundry. Optimizes for production scale. Trade-off: less flexibility, more lock-in, slower to customize.' },
+  { src: '/model_vendor_panel.png', alt: 'Path 2: Model Vendor — Claude Managed Agents, OpenAI Agents SDK, AgentKit. Optimizes for developer speed. Trade-off: less control, dependency on vendor roadmap.' },
+  { src: '/open_source_panel.png', alt: 'Path 3: Open-Source — LangChain, CrewAI, LlamaIndex & Friends. Optimizes for flexibility. Trade-off: more engineering effort, you own the complexity.' },
+  { src: '/workflow_automation_panel.png', alt: 'Path 4: Workflow Automation — n8n, Zapier, Make.com. Optimizes for accessibility. Trade-off: limited depth for complex agentic behaviors.' },
+];
+---
+<div class="not-prose my-10 rounded-3xl border border-white/10 bg-black p-6 sm:p-8 shadow-[0_0_80px_-30px_rgba(55,138,221,0.35)]">
+  <div class="text-center mb-8">
+    <p class="text-xs tracking-widest text-muted uppercase">Agent Junky Series</p>
+    <p class="mt-1 text-lg sm:text-xl font-medium text-white">Speed vs Control vs Governance</p>
+    <p class="text-sm text-muted mt-1">Which is most important, which do you give up?</p>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    {panels.map((panel) => (
+      <img src={panel.src} alt={panel.alt} class="w-full h-auto rounded-2xl" />
+    ))}
+  </div>
+
+  <div class="mt-6 rounded-2xl border border-accent/25 bg-accent/[0.06] p-5">
+    <p class="text-sm font-semibold text-accent">🎯 There is no one right path.</p>
+    <p class="mt-1 text-[13px] text-muted">
+      The best strategy? Know the trade-offs. Pick the path that fits your mission today — and evolve as your needs grow.
+    </p>
+    <div class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-[12px] text-white/90">
+      <span>✅ Start where you are.</span>
+      <span>✅ Build what matters.</span>
+      <span>✅ Evolve relentlessly.</span>
+    </div>
+  </div>
+
+  <p class="mt-6 text-center text-[11px] text-muted">🚀 Build agents. Ship impact. Stay junky.</p>
+  <p class="text-center text-[11px] text-accent/70 mt-1">#AgentJunky #AgentBuilder #AIatScale</p>
+</div>

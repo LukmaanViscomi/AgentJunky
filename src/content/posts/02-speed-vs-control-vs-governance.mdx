@@ -1,0 +1,59 @@
+---
+title: "Speed vs control vs governance: picking your agent-building path"
+seriesNumber: 2
+excerpt: "Every agent build is a trade-off between speed, control, and governance. Four real paths, four real trade-offs — here's how to pick without guessing."
+topics: ["Agent architecture", "Strategy & trade-offs"]
+cloudProvider: multi
+publishDate: 2026-07-22
+draft: false
+---
+
+import TradeoffDiagram from '../../components/TradeoffDiagram.astro';
+
+Post one was the lab. This one is the map.
+
+Before you write another line of agent code, there's a question worth answering honestly: what are you actually optimizing for — speed, control, or governance? You don't get all three. Not fully, not yet. Every framework, platform, and vendor SDK on the market has already made that trade-off for you, whether or not it says so on the landing page. If you don't choose consciously, the tooling chooses for you, and you find out about the trade-off in production instead of in planning.
+
+## Four paths, four trade-offs
+
+I keep seeing agent-building approaches collapse into roughly four camps. None of them is wrong. Each one is optimized for something specific, and each one gives something up to get it.
+
+<TradeoffDiagram />
+
+## Path 1: Hyperscaler
+
+GCP's Agent Platform, AWS Bedrock + AgentCore, Microsoft Foundry — these are the "the cloud vendor builds the runtime, you build the agent" plays. You get production scale, managed infrastructure, IAM that already integrates with everything else in your org, and a deployment target that won't fall over the day it gets real traffic.
+
+What you give up is flexibility. You're building inside someone else's opinions about how an agent runtime should work, and moving off it later is a migration project, not a config change. If your organization is already deep in one cloud and the agent is going into a system that needs to survive an audit, this is usually the right trade to make.
+
+## Path 2: Model vendor
+
+Claude's managed agents, the OpenAI Agents SDK, AgentKit — the model vendor gives you the orchestration layer directly, tuned for their own models. This is the fastest path from idea to working prototype I've used. Less plumbing, fewer decisions, and the defaults are usually good defaults.
+
+The cost is control and a dependency you don't fully own: your roadmap is now downstream of theirs. A breaking API change, a deprecated feature, a pricing shift — none of it is in your hands. Great for getting something real in front of people fast. Riskier as the permanent foundation for something load-bearing.
+
+## Path 3: Open-source
+
+LangChain, CrewAI, LlamaIndex and the rest of that ecosystem. This is the path where you own every decision: which model, which vector store, which orchestration pattern, which failure mode you're willing to tolerate. Maximum flexibility, and genuinely the best option when your requirements don't fit anyone else's opinionated framework.
+
+It also means you own the complexity. Nobody else is going to fix the bug in your retry logic. The engineering effort is real, and it's ongoing — these libraries move fast, and "move fast" cuts both ways.
+
+## Path 4: Workflow automation
+
+n8n, Zapier, Make.com. The most accessible path by a wide margin — you can have something running today without writing much code at all, and non-engineers on your team can maintain it. For a huge number of "connect this trigger to that action" problems, this is correctly the entire solution. Don't overbuild past it.
+
+Where it runs out of road is depth. Multi-step reasoning, tool use with real judgment calls, anything that needs the agent to actually decide rather than follow a flowchart — that's past what these tools are built for. Know where that ceiling is before you hit it mid-project.
+
+## There is no one right path
+
+The honest answer to "which path should I use" is: it depends on what you're actually building, and that's not a cop-out — it's the whole point. Production system inside a regulated org with an existing cloud commitment? Hyperscaler. Need a working demo by Friday? Model vendor. Requirements nobody else's framework fits? Open-source. Team of non-engineers automating a real but shallow workflow? Workflow automation.
+
+The mistake isn't picking any of these. The mistake is picking one without knowing what you traded away to get it — and then being surprised by the trade-off six months in, when it's expensive to change your mind.
+
+Start where you are. Build what matters. Evolve relentlessly.
+
+## What's next
+
+Post one was Path 1-and-2-adjacent: Google's ADK running locally against Vertex AI, hyperscaler infrastructure with model-vendor-style developer ergonomics. Future posts in this series will actually build the same kind of agent across the other paths — open-source and workflow automation included — so the trade-offs above stop being theoretical and start being something you can see in running code.
+
+Build agents. Ship impact. Stay junky.

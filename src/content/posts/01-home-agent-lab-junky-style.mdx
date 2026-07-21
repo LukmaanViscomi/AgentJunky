@@ -8,6 +8,10 @@ publishDate: 2026-07-21
 draft: false
 ---
 
+import ArchitectureDiagram from '../../components/ArchitectureDiagram.astro';
+import FullArchitectureDiagram from '../../components/FullArchitectureDiagram.astro';
+import RequestFlow from '../../components/RequestFlow.astro';
+
 Not just consuming AI. Building it. That's the whole premise of this series, so let's start where every real build starts: a laptop, a terminal, and way too many tabs open.
 
 This first post is the lab setup. No theory, no slide decks — just the actual environment I'm running every future post in this series on top of. If you're following along, get this working first. Everything after this assumes it's here.
@@ -22,6 +26,12 @@ The split looks like this:
 - **Remote**: Vertex AI (Gemini models), Cloud Storage, Secret Manager, Cloud Logging, IAM — all sitting in a single GCP project
 
 Nothing here is exotic. That's the point. If your lab is fragile, everything you build on top of it inherits that fragility.
+
+<ArchitectureDiagram />
+
+Want every wire and box? Here's the full breakdown:
+
+<FullArchitectureDiagram />
 
 ## The stack
 
@@ -99,6 +109,8 @@ Nothing clever yet — a ReAct agent backed by a Gemini model, with two tools:
 
 - `get_weather(query)`
 - `get_current_time(city)`
+
+<RequestFlow />
 
 Deliberately boring. The goal of post one isn't a smart agent, it's a lab that doesn't lie to you. Once the plumbing's honest, every future post gets to focus entirely on the interesting part instead of fighting the environment.
 

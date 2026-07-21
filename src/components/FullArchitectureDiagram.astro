@@ -1,0 +1,232 @@
+---
+const localSections = [
+  {
+    heading: 'Developer Interface & Runtime',
+    cols: 2,
+    cards: [
+      { icon: '🌐', title: 'Web Browser', lines: ['ADK Dev UI / Playground', 'http://127.0.0.1:8080/dev-ui/?app=app'] },
+      { icon: '🤖', title: 'ADK Web Server', lines: ['adk web (Uvicorn)', '127.0.0.1:8080'] },
+    ],
+  },
+  {
+    heading: 'Agent Application',
+    cols: 2,
+    cards: [
+      { icon: '🧠', title: 'ReAct Agent', lines: ['Gemini Model (via Vertex AI)'] },
+      { icon: '🛠️', title: 'Tools (Local)', lines: ['get_weather(query)', 'get_current_time(city)', '(extendable)'] },
+    ],
+  },
+  {
+    heading: 'Local Project',
+    cols: 2,
+    cards: [
+      {
+        icon: '📁',
+        title: 'enterprise-agent-platform/',
+        lines: [
+          'app/ — agent code, tools, configs',
+          'deployment/ — Terraform, Cloud Build config',
+          '.env — local configuration',
+          '.venv — project virtual environment',
+          'README.md',
+        ],
+      },
+      {
+        icon: '🐍',
+        title: 'Local Virtual Environment',
+        lines: ['Python 3.11 (uv managed)', 'Installed: google-adk, google-genai, vertexai, fastapi, etc.'],
+      },
+    ],
+  },
+];
+const devTools = ['VS Code', 'PowerShell / Terminal', 'uv (Deps & Env)', 'Google Cloud SDK (gcloud)'];
+
+const cloudSections = [
+  {
+    heading: 'Vertex AI Services',
+    cols: 3,
+    cards: [
+      { icon: '✨', title: 'Vertex AI (Gemini Models)', lines: ['gemini-2.5-pro', 'gemini-2.0-flash', '(via global endpoint)'] },
+      { icon: '🔍', title: 'Vertex AI Search (Future)', lines: ['Vector Search', 'RAG', 'Data Connectors'] },
+      { icon: '🚀', title: 'Agent Runtime (Deployment Target)', lines: ['Managed Runtime', 'Scalability', 'Enterprise Ready'] },
+    ],
+  },
+  {
+    heading: 'CI/CD & Infrastructure',
+    cols: 3,
+    cards: [
+      { icon: '🏗️', title: 'Cloud Build (CI/CD Runner)', lines: ['Build', 'Test', 'Deploy'] },
+      { icon: '📦', title: 'Artifact Registry', lines: ['Store Images', 'Versioning', 'Security'] },
+      { icon: '🌍', title: 'Terraform (via Cloud Build)', lines: ['Provision', 'Infrastructure', 'Manage Lifecycle'] },
+    ],
+  },
+];
+const cloudServices = [
+  { icon: '🗄️', title: 'Cloud Storage', sub: 'Artifacts / Data' },
+  { icon: '🔐', title: 'Secret Manager', sub: 'Secrets' },
+  { icon: '📜', title: 'Cloud Logging', sub: 'Logs' },
+  { icon: '📊', title: 'Cloud Monitoring', sub: 'Metrics' },
+  { icon: '🪪', title: 'IAM', sub: 'Permissions' },
+];
+const networkSecurity = [
+  { icon: '🕸️', title: 'VPC', sub: 'Networking' },
+  { icon: '🛡️', title: 'Firewall Rules', sub: 'Security' },
+  { icon: '👤', title: 'Service Accounts', sub: 'Identity' },
+  { icon: '🧾', title: 'Audit Logs', sub: 'Compliance' },
+];
+
+const apisEnabled = [
+  'aiplatform.googleapis.com',
+  'cloudbuild.googleapis.com',
+  'artifactregistry.googleapis.com',
+  'run.googleapis.com',
+  '...and other required APIs',
+];
+
+const futureIntegrations = [
+  { icon: '🔌', title: 'MCP Servers', sub: 'Files, DB, APIs' },
+  { icon: '🤝', title: 'A2A Protocol', sub: 'Agent-to-Agent' },
+  { icon: '☁️', title: 'External APIs', sub: 'Third Party' },
+  { icon: '🗃️', title: 'Enterprise Data', sub: 'Databases, SaaS' },
+];
+---
+<div class="not-prose my-10 rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 sm:p-8 shadow-[0_0_80px_-30px_rgba(55,138,221,0.35)]">
+  <div class="text-center mb-8">
+    <p class="text-lg sm:text-xl font-medium text-white">Enterprise Agent Platform</p>
+    <p class="text-xs tracking-widest text-muted uppercase mt-1">Full Architecture Reference</p>
+  </div>
+
+  <div class="rounded-t-2xl border border-b-0 border-emerald-400/30 bg-emerald-400/15 px-5 py-3">
+    <p class="text-sm font-semibold tracking-wide text-emerald-300">LOCAL DEVELOPMENT ENVIRONMENT</p>
+    <p class="text-[11px] text-emerald-100/70">Windows 11 Machine</p>
+  </div>
+  <div class="rounded-b-2xl border border-emerald-400/20 bg-emerald-400/[0.04] p-5 space-y-6">
+    {localSections.map((section) => (
+      <div>
+        <p class="text-[11px] uppercase tracking-widest text-emerald-300/80 mb-2">{section.heading}</p>
+        <div class={section.cols === 2 ? 'grid sm:grid-cols-2 gap-2' : 'grid gap-2'}>
+          {section.cards.map((card) => (
+            <div class="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+              <p class="text-sm text-white">{card.icon} {card.title}</p>
+              {card.lines.map((line) => <p class="text-[11px] text-muted">{line}</p>)}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+    <div>
+      <p class="text-[11px] uppercase tracking-widest text-emerald-300/80 mb-2">Developer Tooling</p>
+      <div class="flex flex-wrap gap-2">
+        {devTools.map((tool) => (
+          <span class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] text-muted">{tool}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="my-6 rounded-2xl border border-accent/25 bg-accent/[0.06] p-5">
+    <p class="text-center text-[11px] uppercase tracking-widest text-accent mb-4">🔒 Secure Connection</p>
+    <div class="grid sm:grid-cols-2 gap-2">
+      <div class="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+        <p class="text-sm text-white">Secure Connection</p>
+        <p class="text-[11px] text-muted">HTTPS / gRPC</p>
+      </div>
+      <div class="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+        <p class="text-sm text-white">Authentication</p>
+        <p class="text-[11px] text-muted">ADC via Google Cloud SDK</p>
+      </div>
+      <div class="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+        <p class="text-sm text-white">Service Account</p>
+        <p class="text-[11px] text-muted">For deployments</p>
+      </div>
+      <div class="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+        <p class="text-sm text-white">Application Default Credentials</p>
+        <p class="text-[11px] text-muted font-mono break-all">~/.config/gcloud/application_default_credentials.json</p>
+      </div>
+    </div>
+    <p class="mt-3 text-center text-[11px] text-accent/80">↕ APIs · Models · Tools · Data</p>
+  </div>
+
+  <div class="rounded-t-2xl border border-b-0 border-accent/30 bg-accent/15 px-5 py-3">
+    <p class="text-sm font-semibold tracking-wide text-accent">GOOGLE CLOUD (REMOTE) ENVIRONMENT</p>
+    <p class="text-[11px] text-accent/70 font-mono">Project: agentic-ai-labs-502223</p>
+  </div>
+  <div class="rounded-b-2xl border border-accent/20 bg-accent/[0.04] p-5 space-y-6">
+    <div>
+      <p class="text-[11px] uppercase tracking-widest text-accent/80 mb-2">{cloudSections[0].heading}</p>
+      <div class="grid sm:grid-cols-3 gap-2">
+        {cloudSections[0].cards.map((card) => (
+          <div class="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+            <p class="text-sm text-white">{card.icon} {card.title}</p>
+            {card.lines.map((line) => <p class="text-[11px] text-muted">{line}</p>)}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <p class="text-[11px] uppercase tracking-widest text-accent/80 mb-2">Additional Google Cloud Services</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-2">
+        {cloudServices.map((s) => (
+          <div class="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5 text-center">
+            <p class="text-sm text-white">{s.icon} {s.title}</p>
+            <p class="text-[11px] text-muted">{s.sub}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <p class="text-[11px] uppercase tracking-widest text-accent/80 mb-2">{cloudSections[1].heading}</p>
+      <div class="grid sm:grid-cols-3 gap-2">
+        {cloudSections[1].cards.map((card) => (
+          <div class="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+            <p class="text-sm text-white">{card.icon} {card.title}</p>
+            {card.lines.map((line) => <p class="text-[11px] text-muted">{line}</p>)}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <p class="text-[11px] uppercase tracking-widest text-accent/80 mb-2">Network & Security</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
+        {networkSecurity.map((s) => (
+          <div class="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5 text-center">
+            <p class="text-sm text-white">{s.icon} {s.title}</p>
+            <p class="text-[11px] text-muted">{s.sub}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 grid sm:grid-cols-2 gap-4">
+    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+      <p class="text-sm font-semibold text-white mb-2">Project Configuration</p>
+      <ul class="space-y-1 text-[11px] text-muted">
+        <li>Project ID: <span class="font-mono text-white/80">agentic-ai-labs-502223</span></li>
+        <li>Region: <span class="font-mono text-white/80">us-east1</span> (Infrastructure)</li>
+        <li>Location: <span class="font-mono text-white/80">global</span> (Vertex AI Models)</li>
+      </ul>
+    </div>
+    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+      <p class="text-sm font-semibold text-white mb-2">✅ APIs Enabled</p>
+      <ul class="space-y-1 text-[11px] text-muted">
+        {apisEnabled.map((api) => <li class="font-mono">{api}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-6 pt-6 border-t border-dashed border-white/10">
+    <p class="text-center text-[11px] tracking-widest text-muted uppercase mb-3">Future Integrations</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
+      {futureIntegrations.map((item) => (
+        <div class="rounded-lg border border-dashed border-white/15 px-3 py-2 text-center">
+          <p class="text-sm text-white">{item.icon} {item.title}</p>
+          <p class="text-[11px] text-muted">{item.sub}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
