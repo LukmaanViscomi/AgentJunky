@@ -6,7 +6,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
   .sort((a, b) => a.data.seriesNumber - b.data.seriesNumber);
 
 const topics = [
-  { name: 'Google Cloud & ADK', desc: 'Vertex AI, Agent Development Kit, Agent Engine' },
+  { name: 'Google Cloud & ADK', desc: 'Gemini Enterprise Agent Platform, Agent Development Kit, Deployments' },
   { name: 'AWS', desc: 'Bedrock agents and the infra around them' },
   { name: 'Azure', desc: 'Azure AI Foundry and agent tooling' },
 ];

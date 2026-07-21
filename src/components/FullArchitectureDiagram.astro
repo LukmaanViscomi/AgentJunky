@@ -12,7 +12,7 @@ const localSections = [
     heading: 'Agent Application',
     cols: 2,
     cards: [
-      { icon: '🧠', title: 'ReAct Agent', lines: ['Gemini Model (via Vertex AI)'] },
+      { icon: '🧠', title: 'ReAct Agent', lines: ['Gemini Model (via Gemini Enterprise Agent Platform)'] },
       { icon: '🛠️', title: 'Tools (Local)', lines: ['get_weather(query)', 'get_current_time(city)', '(extendable)'] },
     ],
   },
@@ -43,12 +43,12 @@ const devTools = ['VS Code', 'PowerShell / Terminal', 'uv (Deps & Env)', 'Google
 
 const cloudSections = [
   {
-    heading: 'Vertex AI Services',
+    heading: 'Gemini Enterprise Agent Platform Services',
     cols: 3,
     cards: [
-      { icon: '✨', title: 'Vertex AI (Gemini Models)', lines: ['gemini-2.5-pro', 'gemini-2.0-flash', '(via global endpoint)'] },
-      { icon: '🔍', title: 'Vertex AI Search (Future)', lines: ['Vector Search', 'RAG', 'Data Connectors'] },
-      { icon: '🚀', title: 'Agent Runtime (Deployment Target)', lines: ['Managed Runtime', 'Scalability', 'Enterprise Ready'] },
+      { icon: '✨', title: 'Gemini Models', lines: ['gemini-2.5-pro', 'gemini-2.0-flash', '(via global endpoint)'] },
+      { icon: '🔍', title: 'Search (formerly Vertex AI Search)', lines: ['Vector Search', 'RAG', 'Data Connectors'] },
+      { icon: '🚀', title: 'Deployments (Deployment Target)', lines: ['Managed Runtime', 'Scalability', 'Enterprise Ready'] },
     ],
   },
   {
@@ -207,7 +207,7 @@ const futureIntegrations = [
       <ul class="space-y-1 text-[11px] text-muted">
         <li>Project ID: <span class="font-mono text-white/80">agentic-ai-labs-502223</span></li>
         <li>Region: <span class="font-mono text-white/80">us-east1</span> (Infrastructure)</li>
-        <li>Location: <span class="font-mono text-white/80">global</span> (Vertex AI Models)</li>
+        <li>Location: <span class="font-mono text-white/80">global</span> (Gemini Models)</li>
       </ul>
     </div>
     <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
