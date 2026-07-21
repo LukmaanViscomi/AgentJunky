@@ -1,0 +1,48 @@
+---
+---
+<div
+  id="cookie-banner"
+  class="fixed inset-x-0 bottom-0 z-[60] hidden justify-center px-4 pb-4"
+>
+  <div class="w-full max-w-2xl rounded-2xl border border-white/10 bg-navy/95 backdrop-blur-xl shadow-[0_0_60px_-15px_rgba(55,138,221,0.5)] p-5 sm:p-6">
+    <p class="text-sm text-white/90">
+      We use cookies for advertising and to measure traffic. See our
+      <a href="/cookie-policy" class="text-accent hover:underline">Cookie Policy</a> for details.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <button
+        id="cookie-accept"
+        class="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity"
+      >
+        Accept
+      </button>
+      <button
+        id="cookie-decline"
+        class="rounded-full border border-white/20 px-4 py-2 text-sm font-medium text-white/90 hover:bg-white/5 transition-colors"
+      >
+        Decline
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'agentjunky_cookie_consent';
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('cookie-accept');
+  const declineBtn = document.getElementById('cookie-decline');
+
+  if (banner && !localStorage.getItem(STORAGE_KEY)) {
+    banner.classList.remove('hidden');
+    banner.classList.add('flex');
+  }
+
+  function setConsent(value: string) {
+    localStorage.setItem(STORAGE_KEY, value);
+    banner?.classList.add('hidden');
+    banner?.classList.remove('flex');
+  }
+
+  acceptBtn?.addEventListener('click', () => setConsent('accepted'));
+  declineBtn?.addEventListener('click', () => setConsent('declined'));
+</script>
