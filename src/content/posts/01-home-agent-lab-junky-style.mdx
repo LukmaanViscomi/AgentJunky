@@ -1,0 +1,119 @@
+---
+title: "Let's build a home agent lab, junky style"
+seriesNumber: 1
+excerpt: "Spinning up a real local agent lab on a Windows machine, ADK, Vertex AI, and the wiring in between. First real build of the series, mistakes included."
+topics: ["Agent foundations", "Google Cloud & ADK"]
+cloudProvider: google
+publishDate: 2026-07-21
+draft: false
+---
+
+Not just consuming AI. Building it. That's the whole premise of this series, so let's start where every real build starts: a laptop, a terminal, and way too many tabs open.
+
+This first post is the lab setup. No theory, no slide decks — just the actual environment I'm running every future post in this series on top of. If you're following along, get this working first. Everything after this assumes it's here.
+
+## What we're building
+
+A local development environment where an agent runs entirely on your machine, but calls out to real Google Cloud infrastructure for the model, the logging, and eventually the deployment target. Locally you get a fast feedback loop. Remotely you get the actual Vertex AI-hosted models and the services that make this production-shaped instead of toy-shaped.
+
+The split looks like this:
+
+- **Local**: Windows 11, the agent code, the tools it calls, a browser hitting a dev UI
+- **Remote**: Vertex AI (Gemini models), Cloud Storage, Secret Manager, Cloud Logging, IAM — all sitting in a single GCP project
+
+Nothing here is exotic. That's the point. If your lab is fragile, everything you build on top of it inherits that fragility.
+
+## The stack
+
+Here's exactly what's installed and why:
+
+- **Python 3.11**, managed with `uv` instead of pip/venv directly — faster installs, and dependency resolution that doesn't quietly break every six months
+- **google-adk** — Google's Agent Development Kit, the actual framework running the agent loop
+- **google-genai** and **vertexai** — SDKs for talking to Gemini through Vertex AI rather than the public Gemini API, since this is meant to look like an enterprise setup, not a hobby script
+- **fastapi** — comes along for the ride with ADK's dev server
+- **Google Cloud SDK** (`gcloud`) — for authentication, not for manually clicking through consoles
+- **VS Code + PowerShell terminal** — nothing unusual, just the daily driver
+
+Project structure on disk:
+
+```
+enterprise-agent-platform/
+├── app/            # agent code, tools, configs
+├── deployment/     # Terraform, Cloud Build config
+├── .env            # local configuration
+├── .venv/          # project virtual environment
+└── README.md
+```
+
+Keeping `deployment/` in the repo from day one, even though there's nothing to deploy yet, is deliberate. It means Terraform and CI/CD aren't an afterthought bolted on in post six — they're structural from the start.
+
+## Getting ADK running locally
+
+The whole point of local dev here is speed: change code, see it run, without pushing to the cloud every time.
+
+**1. Authenticate to Google Cloud from your machine**
+
+```bash
+gcloud auth application-default login
+```
+
+This drops Application Default Credentials at `~/.config/gcloud/application_default_credentials.json`, which is what the SDKs pick up automatically — no keys hardcoded anywhere, no service account JSON floating around in the repo.
+
+**2. Set the active project**
+
+```bash
+gcloud config set project agentic-ai-labs-502223
+```
+
+(Yes, that's a real project ID from my own setup — yours will be whatever you named it when you created the project in the console.)
+
+**3. Enable the APIs you'll actually need**
+
+```bash
+gcloud services enable aiplatform.googleapis.com
+gcloud services enable cloudbuild.googleapis.com
+gcloud services enable artifactregistry.googleapis.com
+gcloud services enable run.googleapis.com
+```
+
+Skip this step and you'll spend twenty minutes convinced your code is broken when it's actually just a disabled API.
+
+**4. Install the project dependencies with uv**
+
+```bash
+uv venv
+uv pip install google-adk google-genai vertexai fastapi
+```
+
+**5. Run the ADK dev server**
+
+```bash
+adk web
+```
+
+This spins up a Uvicorn server at `127.0.0.1:8080`, with a dev UI at `/dev-ui/?app=app` in your browser. That's your playground — you edit the agent, refresh, and you're talking to it through a real chat interface backed by a real Gemini model on Vertex AI, not a mock.
+
+## The agent itself, for now
+
+Nothing clever yet — a ReAct agent backed by a Gemini model, with two tools:
+
+- `get_weather(query)`
+- `get_current_time(city)`
+
+Deliberately boring. The goal of post one isn't a smart agent, it's a lab that doesn't lie to you. Once the plumbing's honest, every future post gets to focus entirely on the interesting part instead of fighting the environment.
+
+## What broke (and why that's fine)
+
+In the interest of "real projects, real insights" and not a highlight reel:
+
+- First `adk web` attempt failed silently because ADC hadn't actually been picked up — turned out to be a stale environment variable from an old project pointing `GOOGLE_CLOUD_PROJECT` somewhere else. Worth checking `echo $env:GOOGLE_CLOUD_PROJECT` in PowerShell before you assume the SDK is broken.
+- Forgot to enable `aiplatform.googleapis.com` on a fresh project and got a permissions error that reads nothing like "you forgot to enable an API." If Vertex AI calls fail with vague auth errors, check enabled APIs before you check your credentials.
+- `uv` occasionally caches an old resolution if you change Python version mid-project — `uv venv --python 3.11` explicitly, don't assume it'll pick up the right one from PATH.
+
+None of this is exciting. All of it is exactly the kind of thing that eats an evening if nobody's written it down. So it's written down.
+
+## What's next
+
+Next post in the series goes deeper into ADK itself — how the agent loop actually works, how tools get registered, and where Vertex AI Agent Engine comes in once you're ready to stop running this locally and actually deploy it.
+
+Build agents. Ship impact. Stay junky.

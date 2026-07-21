@@ -1,0 +1,26 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Building intelligent agents. Sharing everything.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>{title} · Agent Junky</title>
+  <meta name="description" content={description} />
+</head>
+<body class="bg-navy text-[#e8f1fb] font-sans min-h-screen flex flex-col">
+  <Nav />
+  <div class="flex-1">
+    <slot />
+  </div>
+  <Footer />
+</body>
+</html>

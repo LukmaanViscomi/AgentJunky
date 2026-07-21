@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.seriesNumber - b.data.seriesNumber);
+
+const topics = [
+  { name: 'Google Cloud & ADK', desc: 'Vertex AI, Agent Development Kit, Agent Engine' },
+  { name: 'AWS', desc: 'Bedrock agents and the infra around them' },
+  { name: 'Azure', desc: 'Azure AI Foundry and agent tooling' },
+];
+---
+<BaseLayout title="Home">
+  <main class="max-w-3xl mx-auto px-6">
+    <section class="py-20 sm:py-28">
+      <span class="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-xs tracking-wide text-accent">
+        AGENT ENGINEERING, IN PUBLIC
+      </span>
+      <h1 class="mt-6 text-4xl sm:text-5xl font-medium tracking-tight text-white">
+        Agent Junky
+      </h1>
+      <p class="mt-4 text-lg text-muted max-w-xl">
+        Building intelligent agents. Sharing everything — the wins, the 2am debugging sessions, and the one config flag that quietly broke everything.
+      </p>
+    </section>
+
+    <section class="grid sm:grid-cols-3 gap-4 pb-20">
+      {topics.map((topic) => (
+        <div class="rounded-xl border border-line p-5">
+          <p class="text-sm font-medium text-white">{topic.name}</p>
+          <p class="mt-1 text-xs text-muted">{topic.desc}</p>
+        </div>
+      ))}
+    </section>
+
+    <section class="pb-24">
+      <h2 class="text-sm tracking-wide text-muted uppercase mb-6">Latest posts</h2>
+      <ul class="space-y-6">
+        {posts.map((post) => (
+          <li class="border border-line rounded-xl p-5">
+            <p class="text-xs tracking-wide text-accent mb-1">
+              SERIES #{post.data.seriesNumber}
+            </p>
+            <a href={`/posts/${post.id.replace(/\.mdx?$/, '')}/`} class="text-lg font-medium text-white hover:underline">
+              {post.data.title}
+            </a>
+            <p class="text-sm text-muted mt-2">{post.data.excerpt}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
+</BaseLayout>
